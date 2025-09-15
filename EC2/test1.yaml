@@ -1,32 +1,18 @@
-Ec2Instance:
-  Type: AWS::EC2::Instance
-  Properties:
-    InstanceType: t3.micro
-    AvailabilityZone: ap-south-1
-    ImageId: ami-0b982602dbb32c5bd
-    SecurityGroups:
-      - !Ref InstanceSecurityGroup
-    ImageId: ami-1234567890abcdef0
-    Tags:
-      - Key: T1
-        Value: V1
-InstanceSecurityGroup:
-  Type: AWS::EC2::SecurityGroup
-  Properties:
-    GroupDescription: Enable SSH access via port 22
-    SecurityGroupIngress:
-      - IpProtocol: tcp
-        FromPort: 22
-        ToPort: 22
-        CidrIp: 192.0.2.0/24
-NewVolume:
-  Type: AWS::EC2::Volume
-  Properties:
-    Size: 1
-    AvailabilityZone: !GetAtt [Ec2Instance, AvailabilityZone]
-MountPoint:
-  Type: AWS::EC2::VolumeAttachment
-  Properties:
-    InstanceId: !Ref Ec2Instance
-    VolumeId: !Ref NewVolume
-    Device: /dev/sdh
+AWSTemplateFormatVersion: 2010-09-09
+Description: A sample CloudFormation template with YAML comments.
+# Resources section
+Resources:
+  MyEC2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      # Linux AMI
+      ImageId: ami-1234567890abcdef0 
+      InstanceType: t2.micro
+      KeyName: MyKey
+      BlockDeviceMappings:
+        - DeviceName: /dev/sdm
+          Ebs:
+            VolumeType: io1
+            Iops: 200
+            DeleteOnTermination: false
+            VolumeSize: 20
