@@ -1,12 +1,15 @@
 Ec2Instance:
   Type: AWS::EC2::Instance
   Properties:
-    "InstanceType": "t3.micro",
-     "AvailabilityZone": "ap-south-1",
-    "ImageId": "ami-0b982602dbb32c5bd",
+    InstanceType: t3.micro
+    AvailabilityZone: ap-south-1
+    ImageId: ami-0b982602dbb32c5bd
     SecurityGroups:
       - !Ref InstanceSecurityGroup
     ImageId: ami-1234567890abcdef0
+    Tags:
+      - Key: T1
+        Value: V1
 InstanceSecurityGroup:
   Type: AWS::EC2::SecurityGroup
   Properties:
